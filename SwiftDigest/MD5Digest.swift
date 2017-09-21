@@ -92,34 +92,39 @@ fileprivate struct MD5State {
         // Not sure how to do this in Swift, though.
         assert(1.littleEndian == 1 && 2.bigEndian != 2)
 
-        var start = input.startIndex
-        while start + 64 < input.endIndex {
-            defer { start += 64 }
-            self.feed(chunk: input[start ..< start + 64])
+        input.withUnsafeBytes {
+            (start: UnsafePointer<UInt32>) in
+            var cursor = start
+            for _ in 0..<input.count / 64 {
+                feed(chunkPtr: cursor)
+                cursor = cursor.advanced(by: 16)
+            }
         }
 
-        var remaining = Data(input[start...])
-        remaining.append(0x80)
+        let remainingBytes = input.count % 64
 
-        while remaining.count % 64 != 56 {
-            remaining.append(0)
+        var rest: Data
+        if remainingBytes <= 55 {
+            rest = Data(count: 64)
+        } else {
+            rest = Data(count: 128)
         }
+
+        rest[0..<remainingBytes] = input[(input.count - remainingBytes)...]
+        rest[remainingBytes] = 0x80
 
         let len = UInt64(input.count) << 3
         for i in 0 ..< 8 {
-            remaining.append(UInt8(truncatingIfNeeded: len >> UInt64(i * 8)))
+            rest[i + rest.count - 8] = UInt8(truncatingIfNeeded: len >> UInt64(i * 8))
         }
 
-        switch remaining.count {
-        case 128:
-            self.feed(chunk: remaining[..<64])
-            self.feed(chunk: remaining[64...])
-
-        case 64:
-            self.feed(chunk: remaining)
-
-        default:
-            preconditionFailure("unexpected remaining bytes count")
+        rest.withUnsafeBytes {
+            (start: UnsafePointer<UInt32>) in
+            var cursor = start
+            for _ in 0..<rest.count / 64 {
+                feed(chunkPtr: cursor)
+                cursor = cursor.advanced(by: 16)
+            }
         }
     }
 
