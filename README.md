@@ -6,7 +6,7 @@ SwiftDigest is released under the MIT License.
 
 ## Contents
 
-SwiftDigest currently contains only a single hashing algorithm: MD5. I'll add more in the future. Or not.
+This is a pure Swift implementation of the MD5 algorithm. I might add more algorithms in the future. Or not.
 
 The main purpose is to provide hashing through a pure Swift framework without dependencies other than
 Swift Foundation. Currently no effort has been taken to optimze the performance. When hashing more than a
@@ -43,3 +43,40 @@ The `MD5Digest` type is ...
 - `RawRepresentable` to convert to and from string representations
 - `CustomStringConvertible` to make printing easy
 - `Codable` to enable JSON and Plist coding of types containing a digest property
+
+## Interface
+
+    /// Represents a 16 byte digest value, created from hashing arbitrary data.
+    public struct MD5Digest : Hashable, RawRepresentable, CustomStringConvertible, Codable {
+
+        /// Perform hashing of the supplied data.
+        public init(from input: Data)
+
+        /// Create a digest from reading a hex representation from the supplied string.
+        public init?(rawValue: String)
+
+        /// The 32 digit hex representation.
+        public var rawValue: String { get }
+
+        /// The 32 digit hex representation.
+        public var description: String { get }
+
+        /// The raw bytes of the digest value, always exactly 16 bytes.
+        public var data: Data { get }
+
+        /// The raw bytes of the digest value as a tuple.
+        public var bytes: (UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8) { get }
+    }
+
+
+    public extension Data {
+
+        /// Computes md5 digest value of the contained bytes.
+        public var md5: MD5Digest { get }
+    }
+
+    public extension String.UTF8View {
+
+        /// Computes md5 digest value of the string's UTF-8 representation.
+        public var md5: MD5Digest { get }
+    }

@@ -41,6 +41,14 @@ class MD5Tests: XCTestCase {
         )
     }
 
+    func testTwoFooterChunks() {
+        let input = Data(count: 57)
+        XCTAssertEqual(
+            input.md5,
+            MD5Digest(rawValue: "ab9d8ef2ffa9145d6c325cefa41d5d4e")
+        )
+    }
+
     func test4KBytes() {
         var input = String(repeating: "The quick brown fox jumps over the lazy dog.", count: 100)
         XCTAssertEqual(
@@ -54,18 +62,6 @@ class MD5Tests: XCTestCase {
         XCTAssertEqual(
             input.utf8.md5,
             MD5Digest(rawValue: "f8a4ffa8b1c902f072338caa1e4482ce")
-        )
-    }
-
-    func test180MBytes() {
-        var input = "All work and no play makes Jack a dull boy\n".data(using: .utf8)!
-        for _ in 1...22 {
-            input = input + input
-        }
-
-        XCTAssertEqual(
-            input.md5,
-            MD5Digest(rawValue: "6eb68025f4acdd4ed98a3d17c15e5333")
         )
     }
 
