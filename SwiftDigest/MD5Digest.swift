@@ -119,7 +119,7 @@ fileprivate struct MD5State {
         assert(1.littleEndian == 1 && 2.bigEndian != 2)
 
         // Feed all complete 64 bytes chunks of the message.
-        let remainingByteCount = feedFullChunks(in: message)
+        let remainingByteCount: Int = feedFullChunks(in: message)
 
         // Copy the remaining bytes into a new chunk sized buffer.
         var chunk = Data(count: MD5State.chunkSize)
@@ -136,7 +136,7 @@ fileprivate struct MD5State {
         }
 
         // Write the size of the message to the end of the last chunk.
-        var len = UInt64(message.count) << 3
+        var len: UInt64 = UInt64(message.count) << 3
         withUnsafeBytes(of: &len) { chunk.replaceSubrange(56 ..< 64, with: $0) }
 
         // Feed the last chunk.
