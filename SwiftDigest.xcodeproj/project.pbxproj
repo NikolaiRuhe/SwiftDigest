@@ -35,7 +35,6 @@
 		91ADDD4B1F72C21A00C2A8EC /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		91ADDD4C1F72C22100C2A8EC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		91CADC551F7FB81D0045546F /* MD5DigestPerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MD5DigestPerformanceTests.swift; sourceTree = "<group>"; };
-		91CADC581F7FBADE0045546F /* module.map */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,19 +90,10 @@
 			isa = PBXGroup;
 			children = (
 				91A577E71F724B3A00A09D42 /* Info.plist */,
-				91CADC571F7FBADE0045546F /* CommonCrypto */,
 				91A577F11F724B8300A09D42 /* MD5DigestTests.swift */,
 				91CADC551F7FB81D0045546F /* MD5DigestPerformanceTests.swift */,
 			);
 			path = SwiftDigestTests;
-			sourceTree = "<group>";
-		};
-		91CADC571F7FBADE0045546F /* CommonCrypto */ = {
-			isa = PBXGroup;
-			children = (
-				91CADC581F7FBADE0045546F /* module.map */,
-			);
-			path = CommonCrypto;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -406,7 +396,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.nikolai-ruhe.SwiftDigestTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_INCLUDE_PATHS = "${SRCROOT}/SwiftDigestTests/CommonCrypto";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -424,7 +413,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "de.nikolai-ruhe.SwiftDigestTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_INCLUDE_PATHS = "${SRCROOT}/SwiftDigestTests/CommonCrypto";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
