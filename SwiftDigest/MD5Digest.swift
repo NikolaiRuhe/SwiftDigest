@@ -29,11 +29,12 @@ import Foundation
 
 public struct MD5Digest : Hashable, RawRepresentable, CustomStringConvertible, Codable {
 
-    private let _digest: (UInt64, UInt64)
+    private let _digest_0: UInt64
+    private let _digest_1: UInt64
 
     /// Perform hashing of the supplied data.
     public init(from input: Data) {
-        _digest = MD5State(input).digest
+        (_digest_0, _digest_1) = MD5State(input).digest
     }
 
     /// Create a digest from reading a hex representation from the supplied string.
@@ -45,23 +46,15 @@ public struct MD5Digest : Hashable, RawRepresentable, CustomStringConvertible, C
         guard input.length == 32 else { return nil }
         guard let high = UInt64(input.substring(to: 16), radix: 16) else { return nil }
         guard let low  = UInt64(input.substring(from: 16), radix: 16) else { return nil }
-        _digest = (high.byteSwapped, low.byteSwapped)
+        (_digest_0, _digest_1) = (high.byteSwapped, low.byteSwapped)
     }
 
     public var rawValue: String { return self.description }
 
     public var description: String {
         return String(format: "%016lx%016lx",
-                      _digest.0.byteSwapped,
-                      _digest.1.byteSwapped)
-    }
-
-    public var hashValue: Int {
-        return Int(_digest.0 ^ _digest.1)
-    }
-
-    public static func ==(lhs: MD5Digest, rhs: MD5Digest) -> Bool {
-        return lhs._digest.0 == rhs._digest.0 && lhs._digest.1 == rhs._digest.1
+                      _digest_0.byteSwapped,
+                      _digest_1.byteSwapped)
     }
 
     public var data: Data {
