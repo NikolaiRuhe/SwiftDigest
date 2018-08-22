@@ -71,4 +71,17 @@ class MD5Tests: XCTestCase {
             MD5Digest(rawValue: "5a8dccb220de5c6775c873ead6ff2e43")
         )
     }
+
+    func testEncoding() {
+        let sut = MD5Digest(rawValue: "d41d8cd98f00b204e9800998ecf8427e")!
+        let json = String(bytes: try! JSONEncoder().encode([sut]), encoding: .utf8)!
+        XCTAssertEqual(json, "[\"\(sut)\"]")
+    }
+
+    func testDecoding() {
+        let sut = MD5Digest(rawValue: "d41d8cd98f00b204e9800998ecf8427e")!
+        let json = Data("[\"\(sut)\"]".utf8)
+        let digest = try! JSONDecoder().decode(Array<MD5Digest>.self, from: json).first!
+        XCTAssertEqual(digest, sut)
+    }
 }
