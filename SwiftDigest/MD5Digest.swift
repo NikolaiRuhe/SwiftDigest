@@ -1,8 +1,37 @@
 // SwiftDigest | MD5Digest
-// Copyright (c) 2017 Nikolai Ruhe
+// Copyright (c) 2017, 2018 Nikolai Ruhe
 // SwiftDigest is released under the MIT License
 
 import Foundation
+
+
+public extension Sequence where Element == UInt8 {
+
+    /// Computes md5 digest value of contained bytes.
+    ///
+    /// This extension on `Sequence` is the main API to create `MD5Digest` values.
+    /// It is usable on all collection types that use bytes as elements, for instance
+    /// `Data` or `String.UTF8View`:
+    ///
+    /// ## Example:
+    ///
+    /// Print the md5 of a string's UTF-8 representation
+    ///
+    ///     let string = "The quick brown fox jumps over the lazy dog"
+    ///     print("md5: \(string.utf8.md5)")
+    ///     // prints "md5: 9e107d9d372bb6826bd81d3542a419d6"
+    ///
+    /// Check if a file's contents match a digest
+    ///
+    ///     let expectedDigest = MD5Digest(rawValue: "9e107d9d372bb6826bd81d3542a419d6")!
+    ///     let data = try Data(contentsOf: someFileURL)
+    ///     if data.md5 != expectedDigest {
+    ///         throw .digestMismatchError
+    ///     }
+    var md5: MD5Digest {
+        return MD5Digest(from: Data(self))
+    }
+}
 
 
 /// MD5Digest represents a 16 byte digest value, created from hashing arbitrary data.
@@ -13,17 +42,10 @@ import Foundation
 /// It conforms to ...
 ///
 /// * `Equatable`, to make comparison to other values easy.
-/// * `Hashable`, so it can be used as a key in dictionaries.
-/// * `RawRepresentable` to convert to and from string representations
-/// * `CustomStringConvertible` to make printing easy
+/// * `Hashable`, so it can be used as a key in dictionaries or in sets.
+/// * `RawRepresentable`, to convert to and from string representations
+/// * `CustomStringConvertible`, to make printing easy
 /// * `Codable` to enable JSON and Plist coding of types containing a digest property
-///
-/// ## Example:
-///
-/// Compute the md5 of a string's UTF-8 representation and compare to a reference value
-///
-///     let digest = "The quick brown fox jumps over the lazy dog".utf8.md5
-///     assert(MD5Digest("9e107d9d372bb6826bd81d3542a419d6") == digest)
 ///
 /// - Copyright: Copyright (c) 2017 Nikolai Ruhe.
 
@@ -71,24 +93,6 @@ public struct MD5Digest : Hashable, RawRepresentable, CustomStringConvertible, C
             return (ptr[0], ptr[1], ptr[2], ptr[3], ptr[4], ptr[5], ptr[6], ptr[7],
                     ptr[8], ptr[9], ptr[10], ptr[11], ptr[12], ptr[13], ptr[14], ptr[15])
         }
-    }
-}
-
-
-public extension Data {
-
-    /// Computes md5 digest value of the contained bytes.
-    var md5: MD5Digest {
-        return MD5Digest(from: self)
-    }
-}
-
-
-public extension String.UTF8View {
-
-    /// Computes md5 digest value of the string's UTF-8 representation.
-    var md5: MD5Digest {
-        return MD5Digest(from: Data(self))
     }
 }
 
