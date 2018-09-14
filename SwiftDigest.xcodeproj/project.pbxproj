@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		91A577E11F724B3A00A09D42 /* SwiftDigest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A577D71F724B3A00A09D42 /* SwiftDigest.framework */; };
-		91A577E81F724B3A00A09D42 /* SwiftDigest.h in Headers */ = {isa = PBXBuildFile; fileRef = 91A577DA1F724B3A00A09D42 /* SwiftDigest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		91A577F31F724B8B00A09D42 /* MD5Digest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A577F21F724B8B00A09D42 /* MD5Digest.swift */; };
 		91A577F41F724F6400A09D42 /* MD5DigestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A577F11F724B8300A09D42 /* MD5DigestTests.swift */; };
 		91CADC561F7FB81D0045546F /* MD5DigestPerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91CADC551F7FB81D0045546F /* MD5DigestPerformanceTests.swift */; };
@@ -26,7 +25,6 @@
 
 /* Begin PBXFileReference section */
 		91A577D71F724B3A00A09D42 /* SwiftDigest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftDigest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		91A577DA1F724B3A00A09D42 /* SwiftDigest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftDigest.h; sourceTree = "<group>"; };
 		91A577DB1F724B3A00A09D42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		91A577E01F724B3A00A09D42 /* SwiftDigestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftDigestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		91A577E71F724B3A00A09D42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -79,7 +77,6 @@
 		91A577D91F724B3A00A09D42 /* SwiftDigest */ = {
 			isa = PBXGroup;
 			children = (
-				91A577DA1F724B3A00A09D42 /* SwiftDigest.h */,
 				91A577DB1F724B3A00A09D42 /* Info.plist */,
 				91A577F21F724B8B00A09D42 /* MD5Digest.swift */,
 			);
@@ -103,7 +100,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91A577E81F724B3A00A09D42 /* SwiftDigest.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
