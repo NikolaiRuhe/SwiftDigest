@@ -49,7 +49,7 @@ public extension Sequence where Element == UInt8 {
 ///
 /// - Copyright: Copyright (c) 2017 Nikolai Ruhe.
 
-public struct MD5Digest : Hashable, RawRepresentable, CustomStringConvertible, Codable {
+public struct MD5Digest : Hashable, RawRepresentable, LosslessStringConvertible, Codable {
 
     private let _digest_0: UInt64
     private let _digest_1: UInt64
@@ -64,10 +64,13 @@ public struct MD5Digest : Hashable, RawRepresentable, CustomStringConvertible, C
     /// The string _must_ consist of exactly 32 hex digits. Otherwise the initializer
     /// returns `nil`.
     public init?(rawValue: String) {
-        let input = rawValue as NSString
-        guard input.length == 32 else { return nil }
-        guard let high = UInt64(input.substring(to: 16), radix: 16) else { return nil }
-        guard let low  = UInt64(input.substring(from: 16), radix: 16) else { return nil }
+        self.init(rawValue)
+    }
+
+    public init?(_ description: String) {
+        guard description.count == 32 else { return nil }
+        guard let high = UInt64(description.prefix(16), radix: 16) else { return nil }
+        guard let low  = UInt64(description.suffix(16), radix: 16) else { return nil }
         (_digest_0, _digest_1) = (high.byteSwapped, low.byteSwapped)
     }
 
